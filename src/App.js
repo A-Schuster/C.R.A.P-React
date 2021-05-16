@@ -8,8 +8,8 @@ import About from './components/about/about'
 
 function App() {
   const [selectedPage, setPage] = useState(<Home />)
-  const handleSelect = (e) => {
-    const clickedPage = e.target.id;
+  const handleSelect = ({target}) => {
+    const clickedPage = target.id;
     switch(clickedPage){
       case 'about':
         setPage(<About/>)

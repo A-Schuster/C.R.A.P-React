@@ -23,21 +23,19 @@ const NavBarComp = (props) => {
     const filter = pages.filter(page => page.idname === e.target.id)
     filter[0].active = true;
     oldActive[0].active = false
-    console.log(filter)
   }
 
   const makeNavItems = (page) => {
-    console.log(page.active)
     if(page.active){
       return(
-        <NavItem active onClick={props.setPage} >
+        <NavItem key={`${page.id}-${page.name}`} active onClick={props.setPage} >
           <NavLink id={page.idname}>{page.page}</NavLink>
         </NavItem>
       )
     }
     else{
       return(
-        <NavItem onClick={props.setPage} >
+        <NavItem key={`${page.id}-${page.name}`} onClick={props.setPage} >
           <NavLink id={page.idname}>{page.page}</NavLink>
         </NavItem>
       )
