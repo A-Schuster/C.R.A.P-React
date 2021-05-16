@@ -1,0 +1,11 @@
+
+img {
+  width: 20vw !important;
+  height: auto;
+  max-width: 170px;
+  min-width: 100px;
+}
+
+.active{
+  font-weight: bold;
+}
