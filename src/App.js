@@ -1,37 +1,21 @@
-import { useState } from 'react';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import './App.css';
-import NavBarComp from './components/navbarcomp/navbarcomp';
-import Home from "./components/home/home"
-import Contact from "./components/contact/contact"
-import HowTo from "./components/howto/howto"
-import About from './components/about/about'
+import { Main } from './components/main/main';
+import { ConfigureStore } from './redux/configureStore'
+
+const store = ConfigureStore()
 
 function App() {
-  const [selectedPage, setPage] = useState(<Home />)
-  const handleSelect = ({target}) => {
-    const clickedPage = target.id;
-    switch(clickedPage){
-      case 'about':
-        setPage(<About/>)
-        break;
-      case 'contact':
-        setPage(<Contact/>)
-        break;
-      case 'howto':
-        setPage(<HowTo/>)
-        break;
-      default:
-        setPage(<Home/>)
-        break;
-    }
-  }
-
 
   return (
-    <div className="App">
-      <NavBarComp setPage={handleSelect}/>
-      {selectedPage}
-    </div>
+    <Provider store={store}>
+      <BrowserRouter>
+        <div className="App">
+          <Main/>
+        </div>
+      </BrowserRouter>
+    </Provider>
   );
 }
 

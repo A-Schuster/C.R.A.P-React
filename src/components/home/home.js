@@ -1,7 +1,10 @@
+import { HeaderPicture, HomeWrapper } from "../../Styles"
 
 const Home = () => {
   return(
-    <div>You are home</div>
+    <HomeWrapper>/
+      <HeaderPicture/>
+    </HomeWrapper>
   )
 }
 
