@@ -23,12 +23,14 @@ const mapStateToProps = state  => {
 class Main extends React.Component {
   render(){
     let isEmployee
+    let loggedIn
     if(this.props.currentUser[0]){
       isEmployee = this.props.currentUser[0].role == "employee" ? true : false
+      loggedIn = this.props.currentUser[0] ? true : false
     }
     return(
       <>
-        <Header />
+        <Header loggedIn={loggedIn}/>
         <Switch>
           <Route path={'/home'} component={Home}/>
           <Route exact path={'/contact'} render={() => <Contact addIssue={this.props.addIssue} resetFeedbackForm={this.props.resetFeedbackForm}/>}/>

@@ -6,7 +6,7 @@ import { Button, Modal, ModalHeader, ModalBody,
 import { handleLogin } from '../../redux/ActionCreator';
 import { useDispatch } from 'react-redux'
 
-const Header = () => {
+const Header = (props) => {
   const [isModalOpen, setModalOpen] = useState(false)
   const dispatch = useDispatch()
   let username = null,
@@ -27,7 +27,7 @@ const Header = () => {
 
   return(
     <div className={"header"}>
-      <NavBarComp handleToggle={handleToggle}/>
+      <NavBarComp loggedIn={props.loggedIn} handleToggle={handleToggle}/>
       <Modal isOpen={isModalOpen} toggle={handleToggle}>
           <ModalHeader toggle={handleToggle}>Login</ModalHeader>
           <ModalBody>

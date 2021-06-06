@@ -45,12 +45,12 @@ const NavBarComp = (props) => {
           </Nav>
           <NavbarText>Certified Repair And Plumbing</NavbarText>
           <span className={"navbar-text ml-auto"}>
-                <Button outline onClick={props.handleToggle}>
+                {!props.loggedIn && <Button outline onClick={props.handleToggle}>
                   <i className="fa fa-sign-in fa-lg" />Login
-                </Button>
-                <Button outline onClick={handleLogOut}>
+                </Button>}
+                {props.loggedIn && <Button outline onClick={handleLogOut}>
                   <i className="fa fa-sign-out fa-lg" />Logout
-                </Button>
+                </Button>}
           </span>
         </Collapse>
       </Navbar>
