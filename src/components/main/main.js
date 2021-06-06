@@ -14,13 +14,18 @@ const mapDipsatchToProps = {
   resetFeedbackForm: () => (actions.reset('feedbackForm')),
   addIssue: () => (addIssue())
 }
-
-export class Main extends React.Component {
-  constructor(props){
-    super(props)
+const mapStateToProps = state  => {
+  return{
+    currentUser: state.currentUser.currentUser
   }
-  
+}
+
+class Main extends React.Component {
   render(){
+    let isEmployee
+    if(this.props.currentUser[0]){
+      isEmployee = this.props.currentUser[0].role == "employee" ? true : false
+    }
     return(
       <>
         <Header />
@@ -29,7 +34,7 @@ export class Main extends React.Component {
           <Route exact path={'/contact'} render={() => <Contact addIssue={this.props.addIssue} resetFeedbackForm={this.props.resetFeedbackForm}/>}/>
           <Route exact path={'/howto'} component={HowTo}/>
           <Route exact path={'/about'} component={About}/>
-          <Route exact path={'/customerissues'} component={customerIssueComp}/>
+          {isEmployee && <Route exact path={'/customerissues'} component={customerIssueComp}/>}
           <Redirect push to={'/home'}/>
         </Switch>
       </>
@@ -37,4 +42,4 @@ export class Main extends React.Component {
   }
 }
 
-export default withRouter(connect(mapDipsatchToProps)(Main));
+export default withRouter(connect(mapStateToProps,mapDipsatchToProps)(Main));

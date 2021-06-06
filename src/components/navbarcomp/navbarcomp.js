@@ -7,15 +7,19 @@ import {
   Nav,
   NavbarText,
   NavItem,
+  Button,
 } from 'reactstrap';
 import { NavLink } from 'react-router-dom'
 import './navbarcomp.css'
 import { pages } from './pages'
+import { useDispatch } from 'react-redux'
+import { logOut } from '../../redux/ActionCreator';
 
 
 const NavBarComp = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
+  const dispatch = useDispatch();
 
 
   const makeNavItems = (page) => {
@@ -24,6 +28,11 @@ const NavBarComp = (props) => {
         <NavLink to={"/" + page.idname}>{page.page}</NavLink>
       </NavItem>
     )
+  }
+
+  const handleLogOut = (e) => {
+    e.preventDefault()
+    dispatch(logOut())
   }
 
   return(
@@ -35,6 +44,14 @@ const NavBarComp = (props) => {
             {pages.map(page => makeNavItems(page))}
           </Nav>
           <NavbarText>Certified Repair And Plumbing</NavbarText>
+          <span className={"navbar-text ml-auto"}>
+                <Button outline onClick={props.handleToggle}>
+                  <i className="fa fa-sign-in fa-lg" />Login
+                </Button>
+                <Button outline onClick={handleLogOut}>
+                  <i className="fa fa-sign-out fa-lg" />Logout
+                </Button>
+          </span>
         </Collapse>
       </Navbar>
   )

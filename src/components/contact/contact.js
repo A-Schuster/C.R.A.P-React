@@ -11,13 +11,6 @@ const maxLength = len => val => !val || (val.length <= len);
 const minLength = len => val => val && (val.length >= len);
 const isNumber = val => !isNaN(+val);
 const validEmail = val => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val)
-// id": 3,
-//     "firstName": "Natale",
-//     "lastName": "Leaf",
-//     "phoneNum": "8705255617",
-//     "email": "nleaf2@unblog.fr",
-//     "sms": "true",
-//     "complaint": "
 const Contact = (props) =>{
   const dispatch = useDispatch(actions.reset('feedbackForm'))
 
@@ -28,7 +21,6 @@ const Contact = (props) =>{
     const email = document.getElementById('email') 
     const complaint = document.getElementById('complaint')
     dispatch(postIssue(firstName.value,lastName.value,phoneNum.value,email.value,complaint.value))
-    console.log(firstName)
     dispatch(actions.reset('feedbackForm'))
   }
 

@@ -6,3 +6,9 @@ export const InitialForm = {
   agree: false,
   complaint: ''
 }
+
+export const LoginForm = {
+  username: '',
+  password: '',
+  remember: false
+}

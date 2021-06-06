@@ -82,3 +82,60 @@ export const addIssue = issue => ({
   type: ActionTypes.ADD_ISSUE,
   payload: issue
 })
+
+export const fetchUsers = () => () => {
+  return fetch(baseUrl + "users")
+  .then(response => {
+    if(response.ok){
+      return response
+    }
+    else{
+      const error = new Error(`Error ${response.status}: ${response.statusText}`)
+      error.response = response;
+      throw error
+    }
+  })
+  .then(response => response.json())
+  .then(response => {
+    return response
+  })
+}
+
+
+export const verifyUser = ({username,password,checked}) => dispatch => {
+  const currentUser = ({
+    username,
+    password,
+    checked
+  })
+  dispatch(fetchUsers())
+  .then(response => {
+    const filtered = response.filter(user => {
+      if(user.username == currentUser.username && currentUser.password == user.password ){
+        return user
+      }
+      else{
+        const error = new Error(`User Not Found`)
+        error.response = response;
+        alert(error)
+      }
+    })
+    return response
+  })
+  .then(response => {
+    dispatch(loginUser(response))
+  })
+}
+
+export const handleLogin = (currentUser) => dispatch => {
+  dispatch(verifyUser(currentUser))
+}
+
+export const loginUser = user => ({
+  type: ActionTypes.LOGIN_USER,
+  payload: user
+})
+
+export const logOut = () => ({
+  type: ActionTypes.LOG_OUT
+})
