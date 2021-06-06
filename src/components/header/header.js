@@ -27,25 +27,22 @@ const Header = (props) => {
 
   return(
     <div className={"header"}>
-      <NavBarComp loggedIn={props.loggedIn} handleToggle={handleToggle}/>
+      <NavBarComp isEmployee={props.isEmployee} loggedIn={props.loggedIn} handleToggle={handleToggle}/>
       <Modal isOpen={isModalOpen} toggle={handleToggle}>
           <ModalHeader toggle={handleToggle}>Login</ModalHeader>
           <ModalBody>
             <Form onSubmit={handleSubmit}>
               <FormGroup>
                 <Label htmlFor='username'>Username</Label>
-                <Input type="text" id="username" 
-               innerRef={input => username = input} name="username"/>
+                <Input type="text" id="username"  name="username"/>
               </FormGroup>
               <FormGroup>
                 <Label htmlFor='password'>Password</Label>
-                <Input type="password" id="password" 
-                innerRef={input => password = input} name="password"/>
+                <Input type="password" id="password" name="password"/>
               </FormGroup>
               <FormGroup check>
                 <Label check htmlFor='username'>
-                  <Input type='checkbox' 
-                  innerRef={input => checked = input} name='remember'/>
+                  <Input type='checkbox'  name='remember'/>
                   Remember Me
                 </Label>
               </FormGroup>

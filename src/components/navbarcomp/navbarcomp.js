@@ -23,6 +23,9 @@ const NavBarComp = (props) => {
 
 
   const makeNavItems = (page) => {
+    if(!props.isEmployee && page.idname == 'customerissues'){
+      return
+    }
     return(
       <NavItem className="m-2" key={`${page.id}-${page.name}`} onClick={props.setPage} >
         <NavLink to={"/" + page.idname}>{page.page}</NavLink>

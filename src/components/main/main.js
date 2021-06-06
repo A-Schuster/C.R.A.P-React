@@ -30,7 +30,7 @@ class Main extends React.Component {
     }
     return(
       <>
-        <Header loggedIn={loggedIn}/>
+        <Header isEmployee={isEmployee} loggedIn={loggedIn}/>
         <Switch>
           <Route path={'/home'} component={Home}/>
           <Route exact path={'/contact'} render={() => <Contact addIssue={this.props.addIssue} resetFeedbackForm={this.props.resetFeedbackForm}/>}/>
