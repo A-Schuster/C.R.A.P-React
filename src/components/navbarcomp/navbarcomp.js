@@ -40,7 +40,7 @@ const NavBarComp = (props) => {
 
   return(
       <Navbar color="light" light expand="md">
-        <NavbarBrand href="/"><img src={'assets/pictures/Icon.png'} /></NavbarBrand>
+        <NavbarBrand href="/home"><img src={'assets/pictures/Icon.png'} /></NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto p-2" navbar>

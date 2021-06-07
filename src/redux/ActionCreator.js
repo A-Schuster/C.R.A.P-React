@@ -134,8 +134,12 @@ export const verifyUser = ({username,password,checked}) => dispatch => {
 }
 
 export const handleLogin = (currentUser) => dispatch => {
+  dispatch(loadingUser())
   dispatch(verifyUser(currentUser))
 }
+export const loadingUser = () => ({
+  type: ActionTypes.LOADING_USER
+})
 
 export const loginUser = user => ({
   type: ActionTypes.LOGIN_USER,
