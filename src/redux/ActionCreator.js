@@ -112,24 +112,34 @@ export const verifyUser = ({username,password,checked}) => dispatch => {
   .then(response => {
     const filtered = response.filter(user => {
       if(user.username == currentUser.username && currentUser.password == user.password ){
+        alert('found')
         return user
       }
-      else{
-        const error = new Error(`User Not Found`)
-        error.response = response;
-        alert(error)
-      }
     })
-    return response
+    if(filtered.length >= 1){
+      return filtered
+    }
+    else{
+      const error = new Error(`Username and or Password are Incorrect`)
+      error.response = response;
+      alert(error) 
+      return null
+    }
   })
   .then(response => {
-    dispatch(loginUser(response))
+    if(response){
+      dispatch(loginUser(response))
+    }
   })
 }
 
 export const handleLogin = (currentUser) => dispatch => {
+  dispatch(loadingUser())
   dispatch(verifyUser(currentUser))
 }
+export const loadingUser = () => ({
+  type: ActionTypes.LOADING_USER
+})
 
 export const loginUser = user => ({
   type: ActionTypes.LOGIN_USER,

@@ -23,6 +23,9 @@ const NavBarComp = (props) => {
 
 
   const makeNavItems = (page) => {
+    if(!props.isEmployee && page.idname == 'customerissues'){
+      return
+    }
     return(
       <NavItem className="m-2" key={`${page.id}-${page.name}`} onClick={props.setPage} >
         <NavLink to={"/" + page.idname}>{page.page}</NavLink>
@@ -37,7 +40,7 @@ const NavBarComp = (props) => {
 
   return(
       <Navbar color="light" light expand="md">
-        <NavbarBrand href="/"><img src={'assets/pictures/Icon.png'} /></NavbarBrand>
+        <NavbarBrand href="/home"><img src={'assets/pictures/Icon.png'} /></NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto p-2" navbar>
@@ -45,12 +48,12 @@ const NavBarComp = (props) => {
           </Nav>
           <NavbarText>Certified Repair And Plumbing</NavbarText>
           <span className={"navbar-text ml-auto"}>
-                <Button outline onClick={props.handleToggle}>
+                {!props.loggedIn && <Button outline onClick={props.handleToggle}>
                   <i className="fa fa-sign-in fa-lg" />Login
-                </Button>
-                <Button outline onClick={handleLogOut}>
+                </Button>}
+                {props.loggedIn && <Button outline onClick={handleLogOut}>
                   <i className="fa fa-sign-out fa-lg" />Logout
-                </Button>
+                </Button>}
           </span>
         </Collapse>
       </Navbar>
