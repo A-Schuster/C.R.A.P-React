@@ -1,11 +1,11 @@
 import React from 'react'
 import Home from "../home/home"
-import Contact from "../contact/contact"
+import Contact from "../Contact/contact"
 import HowTo from "../howto/howto"
-import About from '../about/about'
+import About from '../About/about'
 import { Switch,Route,Redirect, withRouter } from 'react-router-dom';
 import Header from '../header/header'
-import { customerIssueComp } from '../customerIssueComp'
+import { CustomerIssueComp } from '../customerIssueComp'
 import { connect } from 'react-redux'
 import { actions } from 'react-redux-form'
 import { addIssue } from '../../redux/ActionCreator'
@@ -36,7 +36,7 @@ class Main extends React.Component {
           <Route exact path={'/contact'} render={() => <Contact addIssue={this.props.addIssue} resetFeedbackForm={this.props.resetFeedbackForm}/>}/>
           <Route exact path={'/howto'} component={HowTo}/>
           <Route exact path={'/about'} component={About}/>
-          {isEmployee && <Route exact path={'/customerissues'} component={customerIssueComp}/>}
+          {isEmployee && <Route exact path={'/customerissues'} component={CustomerIssueComp}/>}
           <Redirect push to={'/home'}/>
         </Switch>
       </>

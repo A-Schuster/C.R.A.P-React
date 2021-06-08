@@ -23,7 +23,7 @@ const NavBarComp = (props) => {
 
 
   const makeNavItems = (page) => {
-    if(!props.isEmployee && page.idname == 'customerissues'){
+    if(!props.isEmployee && page.idname === 'customerissues'){
       return
     }
     return(

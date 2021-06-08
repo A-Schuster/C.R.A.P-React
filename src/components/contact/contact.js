@@ -1,8 +1,8 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Button,Label, Col, Row } from 'reactstrap';
 import { Control, Form, Errors, actions} from 'react-redux-form'
 import { ContactWrapper } from '../../Styles';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { postIssue } from '../../redux/ActionCreator'
 
 
@@ -11,8 +11,11 @@ const maxLength = len => val => !val || (val.length <= len);
 const minLength = len => val => val && (val.length >= len);
 const isNumber = val => !isNaN(+val);
 const validEmail = val => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val)
-const Contact = (props) =>{
+
+
+const Contact = () => {
   const dispatch = useDispatch(actions.reset('feedbackForm'))
+  const currentUser = useSelector(state => state.currentUser)
 
   const handleSubmit = () => {
     const firstName = document.getElementById('firstName') 
@@ -20,10 +23,10 @@ const Contact = (props) =>{
     const phoneNum = document.getElementById('phoneNum') 
     const email = document.getElementById('email') 
     const complaint = document.getElementById('complaint')
-    dispatch(postIssue(firstName.value,lastName.value,phoneNum.value,email.value,complaint.value))
+    const username = currentUser.currentUser[0].username
+    dispatch(postIssue(firstName.value,lastName.value,phoneNum.value,email.value,complaint.value,username))
     dispatch(actions.reset('feedbackForm'))
   }
-
     return (
         <ContactWrapper className="container">
             <div className="row">

@@ -38,13 +38,14 @@ export const addIssues = issues => ({
   payload: issues
 })
 
-export const postIssue = (firstName,lastName,phoneNum,email,complaint) => dispatch => {
+export const postIssue = (firstName,lastName,phoneNum,email,complaint,username) => dispatch => {
   const newIssue = {
     firstName,
     lastName,
     phoneNum,
     email,
-    complaint
+    complaint,
+    username
   }
   newIssue.date = new Date().toISOString()
   return fetch(baseUrl + 'customerissues',{
@@ -82,6 +83,27 @@ export const addIssue = issue => ({
   type: ActionTypes.ADD_ISSUE,
   payload: issue
 })
+
+export const addUserIssue = issue => ({
+  type: ActionTypes.ADD_USER_ISSUE,
+  payload: issue
+})
+
+export const postUserIssue = (user,issue) => (dispatch) => {
+  dispatch(fetchUsers())
+  .then(response => response.filter(res => res.username === user.username)[0])
+  .then(response => {
+    if(response.issues){
+      return fetch(baseUrl + 'users/' + response.id,{
+        method: "PATCH",
+        body: JSON.stringify({
+          issues: [...response.issues, issue]
+        })
+      })
+    }
+  })
+  .then(response => console.log(response.json()))
+}
 
 export const fetchUsers = () => () => {
   return fetch(baseUrl + "users")
@@ -149,3 +171,21 @@ export const loginUser = user => ({
 export const logOut = () => ({
   type: ActionTypes.LOG_OUT
 })
+
+export const toggleIssueComplete = (issue) => dispatch => {
+  const {id,completed} = issue
+  return fetch(`${baseUrl}customerissues/${id}`,{
+    method: 'PATCH',
+    body: JSON.stringify({
+      completed: completed ? false : true
+    }),
+    headers:{
+      "Content-type": "application/json"
+    }
+  })
+  .then(response => {
+    if(response.ok){
+      dispatch(fetchIssues())
+    }
+  })
+}
