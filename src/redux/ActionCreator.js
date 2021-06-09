@@ -68,7 +68,12 @@ export const postIssue = (firstName,lastName,phoneNum,email,complaint,username) 
     error => {throw error }
     )
     .then(response => response.json())
-    .then(response => dispatch(addIssue(response)))
+    .then(response => {
+      if(username){
+        dispatch(postUserIssue(username,response))
+      }
+      dispatch(addIssue(response))
+    })
     .catch(error => {
       console.log('post issue',error.message)
       alert("Please try again\nError: "+ error.message)
@@ -84,25 +89,26 @@ export const addIssue = issue => ({
   payload: issue
 })
 
-export const addUserIssue = issue => ({
-  type: ActionTypes.ADD_USER_ISSUE,
-  payload: issue
-})
-
 export const postUserIssue = (user,issue) => (dispatch) => {
   dispatch(fetchUsers())
-  .then(response => response.filter(res => res.username === user.username)[0])
   .then(response => {
-    if(response.issues){
-      return fetch(baseUrl + 'users/' + response.id,{
-        method: "PATCH",
-        body: JSON.stringify({
-          issues: [...response.issues, issue]
-        })
-      })
-    }
+    return response.filter(res => res.username === user)[0]
   })
-  .then(response => console.log(response.json()))
+.then(response => {
+  const {id,issues} = response;
+    return fetch(baseUrl + 'users/' + id,{
+      method: "PUT",
+      body: JSON.stringify({
+        ...response,
+        issues: [...issues, issue]
+      }),
+      headers: {
+        "Content-type": "application/json"
+      }
+    })
+  })
+  .then(response => response.json())
+  .then(response => console.log(response))
 }
 
 export const fetchUsers = () => () => {
@@ -133,8 +139,7 @@ export const verifyUser = ({username,password,checked}) => dispatch => {
   dispatch(fetchUsers())
   .then(response => {
     const filtered = response.filter(user => {
-      if(user.username == currentUser.username && currentUser.password == user.password ){
-        alert('found')
+      if(user.username === currentUser.username && currentUser.password === user.password ){
         return user
       }
     })

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button,Label, Col, Row } from 'reactstrap';
 import { Control, Form, Errors, actions} from 'react-redux-form'
-import { ContactWrapper } from '../../Styles';
+import { ContactWrapper } from '../Styles';
 import { useDispatch, useSelector } from 'react-redux'
-import { postIssue } from '../../redux/ActionCreator'
+import { postIssue } from '../redux/ActionCreator'
 
 
 const required = val => val && val.length;

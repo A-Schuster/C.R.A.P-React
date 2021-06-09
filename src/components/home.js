@@ -1,4 +1,4 @@
-import { HeaderPicture, HomeWrapper } from "../../Styles"
+import { HeaderPicture, HomeWrapper } from "../Styles"
 
 const Home = () => {
   return(
