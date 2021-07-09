@@ -23,8 +23,11 @@ const NavBarComp = (props) => {
 
 
   const makeNavItems = (page) => {
-    if(!props.isEmployee && page.idname == 'customerissues'){
+    if(!props.isEmployee && page.idname === 'customerissues'){
       return
+    }
+    else if((!props.loggedIn && page.idname === "issues")|| (props.isEmployee && page.idname === "issues")){
+      return 
     }
     return(
       <NavItem className="m-2" key={`${page.id}-${page.name}`} onClick={props.setPage} >
@@ -40,7 +43,7 @@ const NavBarComp = (props) => {
 
   return(
       <Navbar color="light" light expand="md">
-        <NavbarBrand href="/home"><img src={'assets/pictures/Icon.png'} /></NavbarBrand>
+        <NavbarBrand href="/home"><img src={'assets/pictures/Icon.png'} alt="Our Logo" /></NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto p-2" navbar>

@@ -22,6 +22,11 @@ export const pages = [
   {
     id: 3,
     idname: 'customerissues',
-    page: 'Employee Only',
+    page: 'Customer Issues',
+  },
+  {
+    id: 4,
+    idname: 'issues',
+    page: 'Issues',
   }
 ]

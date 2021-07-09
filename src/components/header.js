@@ -1,17 +1,13 @@
 import React, {useState} from 'react'
-import NavBarComp from "../navbarcomp/navbarcomp"
-import "./header.css"
+import NavBarComp from "./navbarcomp/navbarcomp"
 import { Button, Modal, ModalHeader, ModalBody,
   Form, FormGroup, Input, Label } from 'reactstrap';
-import { handleLogin } from '../../redux/ActionCreator';
+import { handleLogin } from '../redux/ActionCreator';
 import { useDispatch } from 'react-redux'
 
 const Header = (props) => {
   const [isModalOpen, setModalOpen] = useState(false)
   const dispatch = useDispatch()
-  let username = null,
-  password = null,
-  checked = null;
 
   const handleToggle = () => isModalOpen ? setModalOpen(false) : setModalOpen(true)
 

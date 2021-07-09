@@ -38,13 +38,14 @@ export const addIssues = issues => ({
   payload: issues
 })
 
-export const postIssue = (firstName,lastName,phoneNum,email,complaint) => dispatch => {
+export const postIssue = (firstName,lastName,phoneNum,email,complaint,username) => dispatch => {
   const newIssue = {
     firstName,
     lastName,
     phoneNum,
     email,
-    complaint
+    complaint,
+    username
   }
   newIssue.date = new Date().toISOString()
   return fetch(baseUrl + 'customerissues',{
@@ -67,7 +68,12 @@ export const postIssue = (firstName,lastName,phoneNum,email,complaint) => dispat
     error => {throw error }
     )
     .then(response => response.json())
-    .then(response => dispatch(addIssue(response)))
+    .then(response => {
+      if(username){
+        dispatch(postUserIssue(username,response))
+      }
+      dispatch(addIssue(response))
+    })
     .catch(error => {
       console.log('post issue',error.message)
       alert("Please try again\nError: "+ error.message)
@@ -82,6 +88,28 @@ export const addIssue = issue => ({
   type: ActionTypes.ADD_ISSUE,
   payload: issue
 })
+
+export const postUserIssue = (user,issue) => (dispatch) => {
+  dispatch(fetchUsers())
+  .then(response => {
+    return response.filter(res => res.username === user)[0]
+  })
+.then(response => {
+  const {id,issues} = response;
+    return fetch(baseUrl + 'users/' + id,{
+      method: "PUT",
+      body: JSON.stringify({
+        ...response,
+        issues: [...issues, issue]
+      }),
+      headers: {
+        "Content-type": "application/json"
+      }
+    })
+  })
+  .then(response => response.json())
+  .then(response => console.log(response))
+}
 
 export const fetchUsers = () => () => {
   return fetch(baseUrl + "users")
@@ -111,8 +139,7 @@ export const verifyUser = ({username,password,checked}) => dispatch => {
   dispatch(fetchUsers())
   .then(response => {
     const filtered = response.filter(user => {
-      if(user.username == currentUser.username && currentUser.password == user.password ){
-        alert('found')
+      if(user.username === currentUser.username && currentUser.password === user.password ){
         return user
       }
     })
@@ -149,3 +176,21 @@ export const loginUser = user => ({
 export const logOut = () => ({
   type: ActionTypes.LOG_OUT
 })
+
+export const toggleIssueComplete = (issue) => dispatch => {
+  const {id,completed} = issue
+  return fetch(`${baseUrl}customerissues/${id}`,{
+    method: 'PATCH',
+    body: JSON.stringify({
+      completed: completed ? false : true
+    }),
+    headers:{
+      "Content-type": "application/json"
+    }
+  })
+  .then(response => {
+    if(response.ok){
+      dispatch(fetchIssues())
+    }
+  })
+}

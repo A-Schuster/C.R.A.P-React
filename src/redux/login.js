@@ -6,7 +6,7 @@ export const Users = (state = {errMess: null, users: []}, action) => {
       return {...state, errMess: null, users: action.payload}
     case ActionTypes.ADD_USER:
       const users = action.payload;
-      return {...state, users: state.users.concat(issue)}
+      return {...state, users: state.users.concat(users)}
     default:
       return state;
   }

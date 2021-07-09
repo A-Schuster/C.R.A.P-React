@@ -1,6 +1,6 @@
 
+
 const HowTo = () => {
-  
   return(
     <div>You are on How-To</div>
   )
